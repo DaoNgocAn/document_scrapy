@@ -1,5 +1,7 @@
 import scrapy
 from selenium import webdriver
+from document_scrapy.spiders.utils import get_with_retry
+from selenium.webdriver.firefox.options import Options
 
 class URLsSpider(scrapy.Spider):
     name = "urls"
@@ -12,13 +14,18 @@ class URLsSpider(scrapy.Spider):
     table_names = "doc_list_title_row"
 
     def __init__(self):
-        self.driver = webdriver.Chrome()
+        options = Options()
+        options.headless = True
+        self.driver = webdriver.Firefox(options=options)
 
     def __del__(self):
         self.driver.close()
 
     def parse(self, response):
-        self.driver.get(response.url)
+        try:
+            get_with_retry(self.driver, response.url)
+        except:
+            self.driver.close()
         found = True
         while found:
             self.driver.find_element_by_id("highlight")
