@@ -11,7 +11,7 @@ source Env/bin/activate
 pip install selenium
 pip install scrapy
 
-FILE="urls.json"
+FILE="_urls.json"
 if [ -f "$FILE" ]; then 
     scrapy crawl info -o info.json
 else 

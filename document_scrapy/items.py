@@ -19,4 +19,6 @@ class DocumentScrapyItem(scrapy.Item):
     Trich_Yeu = scrapy.Field(serializer=str)
     Co_Quan_Ban_Hanh = scrapy.Field(serializer=str)
     Phan_Loai = scrapy.Field(serializer=str)
+    unknown = scrapy.Field(serializer=str)
     URLs = scrapy.Field()
+    URL_ROOT = scrapy.Field(serializer=str)

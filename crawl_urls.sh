@@ -6,8 +6,8 @@ if [ -f "nohup.txt" ]; then
     rm nohup.txt
 fi
 
-if [ -f "urls.json" ]; then
-    rm "urls.json"
+if [ -f "_urls.json" ]; then
+    rm "_urls.json"
 fi
 
 scrapy crawl urls -o urls.json

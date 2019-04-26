@@ -14,21 +14,24 @@ class URLsSpider(scrapy.Spider):
     table_names = "doc_list_title_row"
 
     def __init__(self):
-        options = Options()
-        options.headless = True
-        self.driver = webdriver.Firefox(options=options)
+        # options = Options()
+        # options.headless = True
+        # self.driver = webdriver.Firefox(options=options)
+        self.driver = webdriver.Chrome()
 
     def __del__(self):
         self.driver.close()
 
     def parse(self, response):
+        url = response.url
         try:
-            get_with_retry(self.driver, response.url)
+            get_with_retry(self.driver, url)
         except:
-            self.driver.close()
+            import sys
+            sys.exit(0)
+
         found = True
         while found:
-            self.driver.find_element_by_id("highlight")
             rows = self.driver.find_elements_by_xpath("//table[@id='highlight']//tr")
             for row in rows[1:]:
                 yield {
@@ -41,6 +44,8 @@ class URLsSpider(scrapy.Spider):
             for a in navigator:
                 if "S" in a.text:
                     a.click()
+                    self.driver.find_element_by_xpath("//select[@name='pagesize']").find_elements_by_tag_name("option")[
+                        -1].click()
                     found=True
                     break
 

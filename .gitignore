@@ -152,3 +152,5 @@ fabric.properties
 
 info.json
 urls.json
+nohup.out
+_urls.json
